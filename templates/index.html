@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini 1.5 Pro UI to Code</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .upload-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Konversi Gambar UI ke Kode HTML dengan Gemini 1.5 Pro</h1>
+        <p>Unggah gambar UI Anda, dan Gemini 1.5 Pro akan menghasilkan kode HTML dengan CSS inline untuk Anda.</p>
+        <form action="/generate_code" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" class="form-control-file">
+            <button type="submit" class="btn btn-primary upload-button">Unggah Gambar</button>
+        </form>
+    </div>
+</body>
+</html>
