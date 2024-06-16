@@ -1,45 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Gemini 1.5 Pro UI to Code</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-        }
-
-        .container {
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #007bff;
-        }
-
-        .upload-button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Generasi Kode</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Konversi Gambar UI ke Kode HTML dengan Gemini 1.5 Pro</h1>
-        <p>Unggah gambar UI Anda, dan Gemini 1.5 Pro akan menghasilkan kode HTML dengan CSS inline untuk Anda.</p>
-        <form action="/generate_code" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" accept="image/*" class="form-control-file">
-            <button type="submit" class="btn btn-primary upload-button">Unggah Gambar</button>
-        </form>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-6 mt-10 rounded-md shadow-md bg-white">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Hasil Generasi Kode</h1>
+
+        {% if status == "success" %}
+            <div id="generated-html" class="border rounded-md p-4 mb-4" style="white-space: pre-wrap;">
+                {{ html_code | safe }}
+            </div>
+
+            <button id="copy-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline" onclick="copyCode()">Salin Kode</button>
+
+            <script>
+                function copyCode() {
+                    const code = document.getElementById('generated-html').textContent;
+                    navigator.clipboard.writeText(code)
+                        .then(() => {
+                            // Tambahkan pesan sukses jika kode berhasil disalin
+                            alert("Kode berhasil disalin!");
+                        })
+                        .catch(err => {
+                            // Tampilkan pesan kesalahan jika terjadi masalah saat menyalin kode
+                            console.error("Gagal menyalin kode: ", err);
+                            alert("Gagal menyalin kode. Silakan salin secara manual.");
+                        });
+                }
+            </script>
+
+        {% else %}
+            <p class="text-red-500">{{ message }}</p>
+        {% endif %}
+
     </div>
 </body>
 </html>

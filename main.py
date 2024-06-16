@@ -5,8 +5,10 @@ import pathlib
 from PIL import Image
 import google.generativeai as genai
 import uvicorn
+from fastapi.templating import Jinja2Templates
 
-# Configure the API key directly in the script
+
+# api key from google gemini
 API_KEY = 'AIzaSyB4XAeahNPcXlpA0UUFLYOZ1up2llYEoNg'
 genai.configure(api_key=API_KEY)
 
@@ -30,8 +32,8 @@ safety_settings = [
 # Model name
 MODEL_NAME = "gemini-1.5-pro-latest"
 
-# Framework selection (e.g., Tailwind, Bootstrap, etc.)
-framework = "Regular CSS use flex grid etc"  # Change this to "Bootstrap" or any other framework as needed
+# framework style
+framework = "TailwindCSS"
 
 # Create the model
 model = genai.GenerativeModel(
@@ -60,6 +62,9 @@ app = FastAPI(
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Inisialisasi Jinja2Templates
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
@@ -97,11 +102,11 @@ async def generate_code(image: UploadFile = File(...)):
         refine_html_prompt = f"Validasi kode HTML berikut berdasarkan deskripsi UI dan gambar dan berikan versi yang disempurnakan dari kode HTML dengan CSS {framework} yang meningkatkan akurasi, responsivitas, dan kepatuhan terhadap desain asli. HANYA kembalikan kode HTML yang disempurnakan dengan CSS inline. Hindari menggunakan ```html. dan ``` di akhir. Berikut adalah HTML awal: {initial_html}"
         refined_html = send_message_to_model(refine_html_prompt, temp_image_path)
 
-        return {
+        return templates.TemplateResponse("result.html", {
             "html_code": refined_html,
             "status": "success",
             "message": "Kode HTML berhasil dihasilkan!"
-        }
+        })
     except Exception as e:
         return {
             "status": "error",
