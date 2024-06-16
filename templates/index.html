@@ -3,41 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasil Generasi Kode</title>
+    <title>Gemini 1.5 Pro UI to Code</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css"> 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto p-6 mt-10 rounded-md shadow-md bg-white">
-        <h1 class="text-3xl font-bold text-gray-800 mb-4">Hasil Generasi Kode</h1>
+<body class="bg-gradient-to-br from-purple-500 to-pink-500 font-sans" onload="AOS.init()"> 
+    <div class="container mx-auto p-6 mt-10 rounded-md shadow-md bg-white" data-aos="fade-up">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Konversi Gambar UI ke Kode HTML dengan Gemini 1.5 Pro</h1>
+        <p class="text-gray-600 mb-8">Unggah gambar UI Anda, dan Gemini 1.5 Pro akan menghasilkan kode HTML dengan CSS inline untuk Anda.</p>
 
-        {% if status == "success" %}
-            <div id="generated-html" class="border rounded-md p-4 mb-4" style="white-space: pre-wrap;">
-                {{ html_code | safe }}
-            </div>
+        <div class="flex items-center justify-center mb-8">
+            <img src="/static/images/logo.png" alt="Logo" class="w-24 h-24" data-aos="zoom-in" data-aos-duration="1000"> 
+        </div>
 
-            <button id="copy-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline" onclick="copyCode()">Salin Kode</button>
-
-            <script>
-                function copyCode() {
-                    const code = document.getElementById('generated-html').textContent;
-                    navigator.clipboard.writeText(code)
-                        .then(() => {
-                            // Tambahkan pesan sukses jika kode berhasil disalin
-                            alert("Kode berhasil disalin!");
-                        })
-                        .catch(err => {
-                            // Tampilkan pesan kesalahan jika terjadi masalah saat menyalin kode
-                            console.error("Gagal menyalin kode: ", err);
-                            alert("Gagal menyalin kode. Silakan salin secara manual.");
-                        });
-                }
-            </script>
-
-        {% else %}
-            <p class="text-red-500">{{ message }}</p>
-        {% endif %}
-
+        <form action="/generate_code" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
+            <input type="file" name="image" accept="image/*" class="border rounded-md px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" data-aos="flip-left" data-aos-duration="1000">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline" data-aos="flip-right" data-aos-duration="1000">Unggah Gambar</button>
+        </form>
     </div>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out'
+        });
+    </script>
 </body>
 </html>
