@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 
 
 # api key from google gemini
-API_KEY = 'AIzaSyB4XAeahNPcXlpA0UUFLYOZ1up2llYEoNg'
+API_KEY = 'YOUR-API-KEY'
 genai.configure(api_key=API_KEY)
 
 # Generation configuration
